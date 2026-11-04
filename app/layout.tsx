@@ -1,0 +1,20 @@
+import type { Metadata } from 'next';
+import './globals.css';
+import './buttons.css';
+import './campaign.css';
+import './scrollcraft.css';
+import './header.css';
+import './product-story.css';
+import './motion-refinements.css';
+import './cinematic-motion.css';
+import './cookie-consent.css';
+import './new-drop.css';
+import './neutral-story.css';
+import './mobile-motion.css';
+import './scrollcraft-scenes.css';
+import './site-loader.css';
+import './shop-experience.css';
+import './discovery.css';
+import './launch-countdown.css';
+export const metadata:Metadata={title:'TREAU — Move Different.',description:'Une silhouette. Vos propres règles. Collection 001 : un studio streetwear indépendant.',icons:{icon:'/brand/treau-icon.png'}};
+export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="fr"><body>{children}</body></html>;}

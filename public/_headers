@@ -1,0 +1,7 @@
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+# These image URLs include a hash of their original artwork.
+/images/optimized/*
+  Cache-Control: public, max-age=31536000, immutable
+/brand/treau-mark-*
+  Cache-Control: public, max-age=31536000, immutable

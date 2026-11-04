@@ -1,0 +1,42 @@
+.story-mobile-focus,.story-mobile-progress,.neutral-story .story-hero-white-foot { display: none; }
+@media (max-width:700px) and (prefers-reduced-motion:no-preference) {
+  .neutral-story .story-hero[data-mobile-piece="white"] .story-hero-black-foot { display: none; }
+  .neutral-story .story-hero[data-mobile-piece="white"] .story-hero-white-foot { display: flex; }
+  .neutral-story .story-hero-stage,.story-color-stage,.drop-stage { overflow: clip; }
+  /* Three mobile compositions, driven by native scroll rather than a timer. */
+  .neutral-story .story-hero { height: 215svh; }
+  .neutral-story .story-hero-copy { opacity: var(--hero-opacity,1); transform: translate3d(0,calc(var(--hero-rise,0)*.65px),0); }
+  .neutral-story .story-hero-detail { display: none; }
+  .neutral-story .story-hero-garment {
+    transform: translate3d(calc((18 * var(--mobile-black-focus,0) - 70 * var(--mobile-white-focus,0))*1vw),calc(var(--mobile-black-focus,0)*-12px),0) rotate(calc(-8deg + var(--mobile-black-focus,0)*10deg - var(--mobile-white-focus,0)*13deg)) scale(calc(1 + .16 * var(--mobile-black-focus,0) - .2 * var(--mobile-white-focus,0)));
+    opacity: calc(1 - var(--mobile-white-focus,0));
+  }
+  .neutral-story .story-hero-companion {
+    z-index: 3;
+    transform: translate3d(calc((50 * var(--mobile-black-focus,0) - 75 * var(--mobile-white-focus,0))*1vw),calc(var(--mobile-white-focus,0)*-15px),0) rotate(calc(10deg - var(--mobile-white-focus,0)*13deg)) scale(calc(1 + .3 * var(--mobile-white-focus,0)));
+    opacity: 1;
+  }
+  .neutral-story .story-mobile-focus { display: block; position: absolute; top: 14%; left: 24px; right: 24px; text-align: center; pointer-events: none; }
+  .story-mobile-focus > div { position: absolute; inset: 0 0 auto; }
+  .story-mobile-focus span { display: block; font-size: 10px; letter-spacing: .14em; color: #646567; margin-bottom: 16px; }
+  .story-mobile-focus p { font-size: clamp(32px,10vw,44px); line-height: 1.02; font-weight: 600; letter-spacing: -.055em; color: #252628; }
+  .mobile-focus-black { opacity: var(--mobile-black-caption,0); transform: translate3d(0,calc((1 - var(--mobile-black-caption,0))*12px),0); }
+  .mobile-focus-white { opacity: var(--mobile-white-caption,0); transform: translate3d(0,calc((1 - var(--mobile-white-caption,0))*12px),0); }
+  .neutral-story .story-mobile-progress { display: block; position: absolute; top: 70px; left: 24px; right: 24px; height: 2px; background: #0000000c; }
+  .story-mobile-progress i { display: block; width: 100%; height: 100%; transform: scaleX(var(--mobile-hero-progress,0)); transform-origin: left; background: #646567; }
+  /* Links keep their hitboxes; only the photographs travel. */
+  .next-drop-preview-image,.next-drop-preview-image.second-look { animation: none; transform: none; opacity: 1; }
+  .next-drop-preview-image img { height: calc(100% + 16px); max-height: none; margin-top: -8px; object-position: 50% 0; transform-origin: 50% 0; transform: translate3d(0,calc(var(--preview-travel,0)*.18px),0) scale(var(--preview-scale,1)); transition: none; }
+  .next-drop-preview-image.second-look img { transform: translate3d(0,calc(var(--preview-travel,0)*-.14px),0) scale(var(--preview-scale,1)); }
+  .new-drop-page[data-motion="ready"] [data-story-reveal] { opacity: .35; translate: 0 22px; transition: opacity .6s,translate .75s cubic-bezier(.16,.8,.2,1); }
+  .new-drop-page[data-motion="ready"] [data-story-reveal].story-revealed { opacity: 1; translate: 0 0; }
+  .modal-content.cart-panel,.modal-content.quick-panel,.modal-content.menu-panel,.modal-content.search-panel { animation: mobile-drawer-enter .38s cubic-bezier(.16,.8,.2,1) both; }
+  .collection-product-add:active svg,.story-action:active svg { transform: scale(.8) rotate(90deg); }
+  .drop-view-options button { transition: background .25s,color .25s,border-color .25s; }
+  .drop-view-options button:active { background: #76777b; color: white; }
+}
+@media(max-width:700px) and (max-height:650px) and (prefers-reduced-motion:no-preference) {
+  .story-mobile-focus p { font-size: 32px; }
+  .story-mobile-focus span { margin-bottom: 10px; font-size: 9px; }
+}
+@keyframes mobile-drawer-enter { from { opacity: .5; translate: 30px 0; } to { opacity: 1; translate: 0 0; } }

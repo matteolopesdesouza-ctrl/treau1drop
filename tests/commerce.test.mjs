@@ -1,0 +1,12 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {spawnSync} from 'node:child_process';
+import {quoteItems,discountAmount,orderInsertSQL,orderInventoryUpdateSQL,orderRestockSQL,cancelOrderSQL} from '../lib/commerce.ts';
+const product={id:'p',name:'TEST HOODIE',price:8900,status:'Published',sku:'TEST',image:'/images/hoodie.webp',variants:[{color:'Cobalt',size:'M',stock:3}]};
+const item={id:'p',color:'Cobalt',size:'M',quantity:1};
+test('le montant est calculé à partir du catalogue et les variantes identiques sont fusionnées',()=>{const q=quoteItems([{...item,price:1},{...item,quantity:2}],[product]);assert.equal(q.subtotal,26700);assert.equal(q.lines.length,1);assert.equal(q.lines[0].quantity,3);});
+test('une quantité négative, fractionnaire ou supérieure au stock est refusée',()=>{for(const quantity of [-1,.5,4])assert.throws(()=>quoteItems([{...item,quantity}],[product]));});
+test('un brouillon, une taille inexistante et un produit manquant ne peuvent être commandés',()=>{assert.throws(()=>quoteItems([item],[{...product,status:'Draft'}]));assert.throws(()=>quoteItems([{...item,size:'XXL'}],[product]));assert.throws(()=>quoteItems([item],[]));});
+test('les réductions sont arrondies en centimes et plafonnées au montant du panier',()=>{const c={kind:'percent',value:15,enabled:1,used:0,max_uses:10,starts_at:null,ends_at:null};assert.equal(discountAmount(c,8901),1335);assert.equal(discountAmount({...c,kind:'fixed',value:99999},8900),8900);});
+test('les dates et plafonds des codes promo sont appliqués au moment de la commande',()=>{const c={kind:'percent',value:10,enabled:1,used:0,max_uses:10,starts_at:100,ends_at:200};assert.throws(()=>discountAmount(c,8900,99));assert.equal(discountAmount(c,8900,100),890);assert.throws(()=>discountAmount(c,8900,200));assert.throws(()=>discountAmount({...c,used:10},8900,150));assert.throws(()=>discountAmount({...c,enabled:0},8900,150));});
+test('les transactions SQL empêchent le surstock, les doublons et les doubles remises en stock',()=>{const result=spawnSync('python3',['tests/order_sql.py'],{input:JSON.stringify({insert:orderInsertSQL(false),couponInsert:orderInsertSQL(true),decrement:orderInventoryUpdateSQL,restock:orderRestockSQL,cancel:cancelOrderSQL}),encoding:'utf8'});assert.equal(result.status,0,result.stderr||result.stdout);});

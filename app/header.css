@@ -1,0 +1,52 @@
+/* Navigation stays above every decorative scene, below the open dialogs. */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 80;
+  isolation: isolate;
+  flex-wrap: nowrap;
+}
+.site-header .wordmark,
+.site-header .header-actions { flex: 0 0 auto; }
+.site-header .desktop-nav { flex: 0 0 auto; }
+.site-header .desktop-nav a { min-height: 44px; display: inline-flex; align-items: center; }
+.site-header .desktop-nav a[aria-current="page"]::after { transform: scaleX(1); }
+.site-header .header-actions > button,
+.site-header .header-actions > a {
+  min-width: 44px;
+  min-height: 44px;
+  flex-shrink: 0;
+  border-radius: 2px;
+  touch-action: manipulation;
+}
+.site-header .header-actions > button:hover,
+.site-header .header-actions > a:hover,
+.site-header .header-actions > a[aria-current="page"] { background: #ffffff14; }
+.site-header a:focus-visible,
+.site-header button:focus-visible { outline: 2px solid #7b9dff; outline-offset: 3px; }
+.site-header .brand-symbol,
+.site-header .brand-name,
+.site-header svg { pointer-events: none; }
+.site-header .mobile-menu { display: none; gap: 10px; }
+.site-header .mobile-menu > span { font: 600 10px/1 Arial, sans-serif; letter-spacing: .06em; }
+
+@media (max-width: 1000px) {
+  .site-header, .site-header.on-hero { padding-left: 22px; padding-right: 22px; gap: 12px; }
+  .site-header .desktop-nav,
+  .site-header .header-actions .locale { display: none; }
+  .site-header .header-actions { gap: 6px; }
+  .site-header .header-actions .mobile-menu { display: inline-flex; width: auto; padding: 0 8px; }
+}
+@media (max-width: 700px) {
+  .site-header, .site-header.on-hero { padding-left: 16px; padding-right: 16px; gap: 8px; }
+  .site-header .header-actions { gap: 3px; }
+  .site-header .header-actions > a,
+  .site-header .mobile-menu > span { display: none; }
+  .site-header .header-actions .mobile-menu { width: 44px; padding: 0; }
+  .site-header .header-actions .cart-button { min-width: 58px; padding: 0 4px; }
+}
+@media (max-width: 380px) {
+  .site-header, .site-header.on-hero { padding-left: 12px; padding-right: 12px; }
+  .site-header .header-actions { gap: 0; }
+  .site-header .header-actions .cart-button { min-width: 54px; }
+}

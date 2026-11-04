@@ -1,0 +1,54 @@
+/* Lightweight reveals: no blur, no perpetual transforms, no hidden mobile content. */
+.craft-reveal{opacity:.5;translate:0 16px;transition:opacity .35s ease,translate .45s ease}
+.craft-reveal.craft-visible,.craft-reveal:focus-within{opacity:1;translate:0 0}
+@media(max-width:700px){
+ html{scroll-behavior:auto}
+ .craft-reveal{opacity:1;translate:none;transition:none}
+ .site-header.on-hero.is-scrolled{backdrop-filter:none;background:#0b0c0d}
+}
+@media(prefers-reduced-motion:reduce){.craft-reveal{opacity:1;translate:none;transition:none}}
+/* Interaction refinements stay independent from decorative motion. */
+.pdp-topline>button{min-width:44px;min-height:44px;display:flex;align-items:center;justify-content:center}
+.pdp-accordions summary{cursor:pointer}
+.quick-shop-form fieldset{min-width:0}
+.modal-content:focus,.admin-modal-content:focus{outline:none}
+.checkout-success>.button,.checkout-success>.text-link{margin:20px 20px 0 0}
+.remove-coupon{margin:0 0 10px}
+.craft-reveal{opacity:.7;translate:0 18px;transition:opacity .35s ease,translate .5s cubic-bezier(.2,.8,.2,1)}
+.craft-reveal.craft-visible,.craft-reveal:focus-within{opacity:1;translate:0 0}
+@media(max-width:700px){
+ .craft-reveal{opacity:.85;translate:0 12px;transition:opacity .3s ease,translate .4s ease}
+ .craft-reveal.craft-visible,.craft-reveal:focus-within{opacity:1;translate:0 0}
+ .filter-bar{gap:18px;padding-top:5px}
+ .filter-bar label{font-size:11px;min-width:125px}
+ .filter-bar select{min-height:44px;font-size:12px}
+ .size-guide{overflow-x:auto}
+}
+/* Native scroll timelines progressively enhance supported browsers; no JS polyfill. */
+@supports(animation-timeline:view()){
+}
+@keyframes opening-drift{from{transform:translateY(8px) rotate(-7deg) scale(.98)}to{transform:translateY(-24px) rotate(-3deg) scale(1.03)}}
+@keyframes type-forward{from{translate:-12vw 0}to{translate:0 0}}
+@keyframes type-back{from{translate:0 0}to{translate:-15vw 0}}
+@keyframes lookbook-drift{from{transform:scale(1.035) translateY(8px)}to{transform:scale(1.035) translateY(-8px)}}
+@media(prefers-reduced-motion:reduce){.craft-reveal{opacity:1;translate:none;transition:none}}
+/* ESSENTIALS uses the product itself, consistently across both collection views. */
+.collection-cover.cover-0{background:#e9ebee;color:#101113}
+.collection-cover.cover-0>img{object-fit:contain;width:80%;height:84%;padding:20px;margin:0 auto}
+.collection-cover.cover-0:after{background:none}
+.collection-cover.cover-0>div{color:#111}
+@media(max-width:700px){.form-stack input,.coupon-field input,.newsletter input,.search-input input,.filter-bar select{font-size:16px}}
+.filter-count{display:grid;place-items:center;min-width:20px;height:20px;border-radius:50%;background:#181818;color:#fff;font-size:10px}
+.shop-selection{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;margin:-5px 0 28px;min-height:30px}
+.shop-selection>p{font-size:11px;color:#77776e;line-height:1.6}
+.shop-filter-chips{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.shop-filter-chips>button{display:inline-flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 12px;min-height:40px;border:1px solid #d9d9d2;border-radius:30px;background:#edede7;font-size:11px;line-height:1.4;transition:background .2s}
+.shop-filter-chips>button:hover{background:#e1e1d8}
+.shop-filter-chips>.shop-clear-filters{background:none;border-color:transparent;text-decoration:underline;text-underline-offset:3px}
+.shop-grid[data-result-count="1"]{grid-template-columns:minmax(0,1fr);max-width:620px}
+.shop-grid[data-result-count="1"]>article{grid-column:auto}
+@media(max-width:700px){.shop-selection{align-items:flex-start;flex-direction:column;gap:11px;margin-bottom:22px}.shop-filter-chips>button{min-height:44px}.shop-selection>p{font-size:12px}}
+@media(prefers-reduced-motion:reduce){.shop-filter-chips>button{transition:none}}
+/* Keep every clickable area stationary; animate its artwork, not its hitbox. */
+.product-card.craft-reveal,.collection-cover.craft-reveal,.newsletter form.craft-reveal{translate:none;transition:opacity .3s ease}
+/* A dedicated phone sequence, including browsers without native scroll timelines. */
