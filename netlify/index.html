@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#08090a">
+  <title>TREAU — Drop le 1er décembre 2026</title>
+  <meta name="description" content="Le prochain drop TREAU arrive le 1er décembre 2026 à 00h00, heure de Lisbonne.">
+  <link rel="icon" href="/brand/treau-icon.png">
+  <link rel="preload" href="/fonts/treau-display-800.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/launch.css">
+  <script type="module" src="/countdown.mjs"></script>
+</head>
+<body>
+  <main class="launch-screen" aria-labelledby="launch-title" data-launch-at="{{DROP_DATE}}" data-store-url="{{STORE_URL}}">
+    <div class="launch-atmosphere" aria-hidden="true">
+      <img src="/images/optimized/campaign-night-1000-414f7cf3.webp" srcset="/images/optimized/campaign-night-600-414f7cf3.webp 600w, /images/optimized/campaign-night-1000-414f7cf3.webp 1000w" sizes="100vw" width="1000" height="667" alt="" fetchpriority="high">
+    </div>
+    <header class="launch-header">
+      <div class="launch-brand">
+        <span class="launch-symbol" aria-hidden="true"><img src="/brand/treau-mark-160-c5baefd6.webp" width="160" height="160" alt=""></span>
+        <span class="launch-wordmark">TREAU<span>®</span></span>
+      </div>
+      <span class="launch-status"><i aria-hidden="true"></i><span data-launch-status>DROP À VENIR</span></span>
+    </header>
+    <div class="launch-center">
+      <div class="launch-intro">
+        <h1 id="launch-title">Le drop arrive dans</h1>
+        <div class="launch-schedule"><time datetime="{{DROP_DATE}}">1er décembre 2026</time><span>00h00 <i aria-hidden="true">·</i> Heure de Lisbonne</span></div>
+      </div>
+      <div class="launch-timer" role="timer" aria-live="off" aria-label="Compte à rebours avant le drop">
+        <div class="launch-unit" data-unit="0" aria-hidden="true"><span class="launch-number"><span class="launch-number-inner">--</span></span><span class="launch-label">JOURS</span></div>
+        <div class="launch-unit" data-unit="1" aria-hidden="true"><span class="launch-number"><span class="launch-number-inner">--</span></span><span class="launch-label">HEURES</span></div>
+        <div class="launch-unit" data-unit="2" aria-hidden="true"><span class="launch-number"><span class="launch-number-inner">--</span></span><span class="launch-label">MINUTES</span></div>
+        <div class="launch-unit" data-unit="3" aria-hidden="true"><span class="launch-number"><span class="launch-number-inner">--</span></span><span class="launch-label">SECONDES</span></div>
+      </div>
+      <noscript><p class="launch-nojs">Activez JavaScript pour suivre le compte à rebours en direct. Ouverture le 1er décembre 2026 à minuit, heure de Lisbonne.</p></noscript>
+      <a class="launch-open-link" href="{{STORE_URL}}" hidden data-launch-link>Accéder à la boutique ↗</a>
+    </div>
+    <footer class="launch-footer"><span class="launch-motto">MOVE DIFFERENT.</span><p data-launch-message>La boutique s’ouvrira automatiquement<br class="launch-footer-break"> à la fin du compte à rebours.</p></footer>
+  </main>
+</body>
+</html>
