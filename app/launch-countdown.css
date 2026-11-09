@@ -123,6 +123,10 @@ body:has(.launch-screen) { background: #08090a; color-scheme: dark; }
     gap: 14px;
     padding: 16px 0 calc(16px + env(safe-area-inset-bottom, 0px));
   }
+  /* Keep the footer clear of the 64px badge injected by Netlify. */
+  body:has(#nl-badge-frame) .launch-footer {
+    padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+  }
   .launch-motto { font-size: 21px; }
   .launch-footer > p { font-size: 11px; line-height: 1.5; max-width: 29ch; }
 }
@@ -155,6 +159,10 @@ body:has(.launch-screen) { background: #08090a; color-scheme: dark; }
     flex-direction: row;
     align-items: center;
     padding: 0 0 calc(12px + env(safe-area-inset-bottom, 0px));
+  }
+  body:has(#nl-badge-frame) .launch-footer {
+    padding-right: max(0px, calc(206px - var(--launch-gutter)));
+    padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
   }
   .launch-motto { font-size: 20px; }
   .launch-footer > p { font-size: 11px; text-align: right; max-width: 320px; }
