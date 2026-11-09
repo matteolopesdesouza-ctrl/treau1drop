@@ -2,6 +2,13 @@
   base = "netlify"
   command = "node build.mjs"
   publish = "dist"
+  # The countdown uses source files outside the Netlify base directory.
+  ignore = '''
+test -n "${CACHED_COMMIT_REF:-}" && test -n "${COMMIT_REF:-}" &&
+git diff --quiet "$CACHED_COMMIT_REF" "$COMMIT_REF" -- \
+  ':(top)netlify.toml' ':(top)netlify/' \
+  ':(top)app/launch-countdown.css' ':(top)lib/launch.ts' ':(top)public/' || exit 1
+'''
 
 [build.environment]
   NODE_VERSION = "24"
