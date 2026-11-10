@@ -17,15 +17,26 @@ export function attachCountdown(root, {
   const timer = root.querySelector('[role="timer"]');
   const numbers = Array.from(root.querySelectorAll('.launch-number-inner'));
   const words = ['jour', 'heure', 'minute', 'seconde'];
+  const reducedMotion = view.matchMedia?.('(prefers-reduced-motion: reduce)');
   let opening = false;
   let interval;
 
   const tick = () => {
     const current = now();
     const values = getCountdown(current, target);
+    const animateNumbers = current < target && !page.hidden && !reducedMotion?.matches;
     values.forEach((value, index) => {
+      const number = numbers[index];
       const text = String(value).padStart(2, '0');
-      if (numbers[index].textContent !== text) numbers[index].textContent = text;
+      const previous = number.textContent;
+      if (previous === text) return;
+      number.textContent = text;
+      if (animateNumbers && previous !== '--') {
+        number.animate?.(
+          [{ opacity: .68, transform: 'translateY(.10em)' }, { opacity: 1, transform: 'translateY(0)' }],
+          { duration: 220, easing: 'cubic-bezier(.22,.61,.36,1)' },
+        );
+      }
     });
     timer.setAttribute('aria-label', values.map((value, index) => value + ' ' + words[index] + (value === 1 ? '' : 's')).join(', ') + ' avant le drop');
     if (current >= target && !opening) {

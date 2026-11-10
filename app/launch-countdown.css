@@ -94,7 +94,9 @@ body:has(.launch-screen) { background: #08090a; color-scheme: dark; }
 
   .launch-atmosphere > img { object-position: 74% top; }
   .launch-atmosphere::after {
-    background: linear-gradient(180deg, #08090a70 0%, #08090a18 19%, #08090a36 39%, #08090ad9 62%, #08090a 87%);
+    background:
+      radial-gradient(ellipse at 100% 48%, #355fca36, transparent 58%),
+      linear-gradient(180deg, #08090a70 0%, #08090a15 19%, #08090a2b 38%, #08090ae0 66%, #08090a 91%);
   }
   .launch-center {
     margin: auto 0 0;
@@ -103,20 +105,40 @@ body:has(.launch-screen) { background: #08090a; color-scheme: dark; }
   .launch-intro {
     align-items: flex-start;
     flex-direction: column;
-    gap: 10px;
-    margin-bottom: 19px;
+    gap: 8px;
+    margin-bottom: 17px;
   }
-  .launch-intro h1 { font-size: clamp(31px, 8.7vw, 46px); line-height: 1.05; }
-  .launch-schedule { flex-direction: row; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
-  .launch-schedule time { font-size: 13px; }
-  .launch-schedule > span { font-size: 12px; gap: 6px; }
+  .launch-intro h1 {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font: 600 11px/1.4 Arial, sans-serif;
+    letter-spacing: .16em;
+  }
+  .launch-intro h1::before {
+    content: '';
+    width: 16px;
+    height: 1px;
+    background: var(--launch-blue);
+  }
+  .launch-schedule { align-items: flex-start; gap: 6px; }
+  .launch-schedule time {
+    font: 800 clamp(30px, 10.2vw, 54px)/1 var(--display, Arial, sans-serif);
+    letter-spacing: -.02em;
+    text-transform: uppercase;
+  }
+  .launch-schedule > span { font-size: 12px; gap: 7px; }
 
-  .launch-timer { padding: 17px 0 16px; }
+  .launch-timer {
+    padding: 15px 0 14px;
+    border: 1px solid #aebffb33;
+    background: linear-gradient(120deg, #141a27e6, #0b0d13ec 64%, #142043dc);
+  }
   .launch-number { font-size: clamp(46px, 16vw, 94px); line-height: .9; padding-inline: .02em; }
   .launch-label {
-    font-size: clamp(9px, 2.75vw, 12px);
+    font-size: clamp(10px, 2.75vw, 12px);
     margin-top: 8px;
-    letter-spacing: .06em;
+    letter-spacing: .065em;
   }
   .launch-footer {
     align-items: flex-start;
@@ -148,9 +170,17 @@ body:has(.launch-screen) { background: #08090a; color-scheme: dark; }
   .launch-header { min-height: calc(60px + env(safe-area-inset-top, 0px)); }
   .launch-center { margin: auto; padding: clamp(16px, 5svh, 25px) 0; }
   .launch-intro { flex-direction: row; align-items: center; margin-bottom: 18px; gap: 20px; }
-  .launch-intro h1 { font-size: 25px; }
+  .launch-intro h1 {
+    font: 600 25px/1.15 var(--display, Arial, sans-serif);
+    letter-spacing: .005em;
+  }
+  .launch-intro h1::before { content: none; }
   .launch-schedule { flex-direction: column; align-items: flex-end; gap: 2px; }
-  .launch-schedule time { font-size: 12px; }
+  .launch-schedule time {
+    font: 600 12px/1.5 Arial, sans-serif;
+    letter-spacing: normal;
+    text-transform: none;
+  }
   .launch-schedule > span { font-size: 11px; }
   .launch-timer { padding: 16px 0; }
   .launch-number { font-size: min(16vw, 27svh); }
