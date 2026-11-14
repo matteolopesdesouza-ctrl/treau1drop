@@ -44,7 +44,7 @@ export default function LaunchCountdown({ serverNow }: { serverNow: number }) {
       <img
         src="/images/optimized/campaign-night-1000-414f7cf3.webp"
         srcSet="/images/optimized/campaign-night-600-414f7cf3.webp 600w, /images/optimized/campaign-night-1000-414f7cf3.webp 1000w"
-        sizes="100vw"
+        sizes="(max-width: 640px) max(100vw, 108svh), 100vw"
         width="1000"
         height="667"
         alt=""
@@ -59,12 +59,12 @@ export default function LaunchCountdown({ serverNow }: { serverNow: number }) {
         </span>
         <span className="launch-wordmark">TREAU<span>®</span></span>
       </div>
-      <span className="launch-status"><i aria-hidden="true" /> DROP À VENIR</span>
+      <span className="launch-motto">MOVE DIFFERENT.</span>
     </header>
 
     <div className="launch-center">
       <div className="launch-intro">
-        <h1 id="launch-title">Le drop arrive dans</h1>
+        <h1 id="launch-title">Le prochain drop</h1>
         <div className="launch-schedule">
           <time dateTime={DROP_DATE}>1er décembre 2026</time>
           <span>00h00 <i aria-hidden="true">·</i> Heure de Lisbonne</span>
@@ -81,8 +81,7 @@ export default function LaunchCountdown({ serverNow }: { serverNow: number }) {
     </div>
 
     <footer className="launch-footer">
-      <span className="launch-motto">MOVE DIFFERENT.</span>
-      <p>La boutique s’ouvrira automatiquement<br className="launch-footer-break" /> à la fin du compte à rebours.</p>
+      <p>La boutique s’ouvrira automatiquement.</p>
     </footer>
   </main>;
 }

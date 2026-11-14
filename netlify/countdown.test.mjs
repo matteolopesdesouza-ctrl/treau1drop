@@ -15,7 +15,7 @@ test('a tab waking after the drop redirects once and provides a working fallback
   page.hidden = false;
   const numbers = Array.from({ length: 4 }, () => ({ textContent: '--' }));
   const timer = { setAttribute(name, value) { this[name] = value; } };
-  const nodes = Object.fromEntries(['[data-launch-status]', '#launch-title', '[data-launch-message]', '[data-launch-link]'].map(key => [key, { textContent: '', hidden: true }]));
+  const nodes = Object.fromEntries(['#launch-title', '[data-launch-message]', '[data-launch-link]'].map(key => [key, { textContent: '', hidden: true }]));
   nodes['[role="timer"]'] = timer;
   const root = {
     dataset: { launchAt: '2026-12-01T00:00:00+00:00', storeUrl: 'https://treau-studio.matteolopesdesouza.chatgpt.site/' },

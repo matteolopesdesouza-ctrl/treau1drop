@@ -42,7 +42,6 @@ export function attachCountdown(root, {
     if (current >= target && !opening) {
       opening = true;
       clearInterval(interval);
-      root.querySelector('[data-launch-status]').textContent = 'LE DROP EST OUVERT';
       root.querySelector('#launch-title').textContent = 'Le drop est ouvert';
       root.querySelector('[data-launch-message]').textContent = 'Redirection vers la boutique…';
       root.querySelector('[data-launch-link]').hidden = false;
