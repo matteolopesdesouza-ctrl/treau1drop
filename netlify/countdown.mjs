@@ -33,8 +33,8 @@ export function attachCountdown(root, {
       number.textContent = text;
       if (animateNumbers && previous !== '--') {
         number.animate?.(
-          [{ opacity: .68, transform: 'translateY(.10em)' }, { opacity: 1, transform: 'translateY(0)' }],
-          { duration: 220, easing: 'cubic-bezier(.22,.61,.36,1)' },
+          [{ opacity: .76, transform: 'translateY(.2em)' }, { opacity: 1, transform: 'translateY(0)' }],
+          { duration: 260, easing: 'cubic-bezier(.22,1,.36,1)' },
         );
       }
     });

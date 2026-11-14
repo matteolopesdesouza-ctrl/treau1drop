@@ -15,7 +15,6 @@ body:has(.launch-screen) { background: #08090a; color-scheme: dark; }
 .launch-atmosphere > img {
   width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%;
   opacity: var(--launch-photo-opacity); filter: saturate(.72);
-  animation: launch-image-in 1.4s ease-out backwards;
 }
 .launch-atmosphere::after {
   content: ''; position: absolute; inset: 0;
@@ -39,7 +38,6 @@ body:has(.launch-screen) { background: #08090a; color-scheme: dark; }
 .launch-center {
   width: min(100%, 820px); align-self: center; margin: auto;
   padding: clamp(40px, 9svh, 96px) 0;
-  animation: launch-enter .55s ease-out backwards;
 }
 .launch-intro { display: flex; flex-direction: column; gap: 9px; margin-bottom: 22px; }
 .launch-intro h1 {
@@ -69,7 +67,6 @@ body:has(.launch-screen) { background: #08090a; color-scheme: dark; }
 }
 .launch-number-inner { display: block; }
 .launch-unit[data-unit="3"] .launch-number { color: var(--launch-blue); }
-.launch-unit[data-unit="3"] .launch-number-inner { animation: launch-tick .24s ease-out backwards; }
 .launch-label { margin-top: 10px; color: #d8dbe4; font: 12px/1.5 Arial, sans-serif; letter-spacing: .09em; }
 .launch-unit[data-unit="3"] .launch-label { color: var(--launch-blue); }
 .launch-footer {
@@ -78,12 +75,6 @@ body:has(.launch-screen) { background: #08090a; color-scheme: dark; }
 }
 .launch-footer > p { color: var(--launch-muted); font: 12px/1.5 Arial, sans-serif; }
 .launch-nojs { margin-top: 18px; color: var(--launch-muted); font: 12px/1.6 Arial, sans-serif; }
-@keyframes launch-enter { from { opacity: .7; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes launch-image-in {
-  from { opacity: calc(var(--launch-photo-opacity) * .75); transform: scale(1.018); }
-  to { opacity: var(--launch-photo-opacity); transform: scale(1); }
-}
-@keyframes launch-tick { from { transform: translateY(.02em); } to { transform: translateY(0); } }
 
 @media (min-width: 960px) and (min-height: 561px) {
   .launch-atmosphere { left: 11%; }
@@ -164,6 +155,66 @@ body:has(.launch-screen) { background: #08090a; color-scheme: dark; }
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .launch-center, .launch-atmosphere > img, .launch-unit[data-unit="3"] .launch-number-inner { animation: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .launch-screen { --launch-ease-out: cubic-bezier(.22, 1, .36, 1); }
+
+  .launch-atmosphere > img {
+    transform-origin: center 32%;
+    animation: launch-photo-drift 3.2s ease-out both;
+  }
+
+  .launch-intro h1,
+  .launch-schedule time,
+  .launch-schedule > span,
+  .launch-unit {
+    animation: launch-reveal 640ms var(--launch-ease-out) backwards;
+  }
+
+  .launch-schedule time { animation-delay: 90ms; }
+  .launch-schedule > span { animation-delay: 170ms; }
+  .launch-unit { animation-delay: 240ms; }
+  .launch-unit:nth-child(2) { animation-delay: 320ms; }
+  .launch-unit:nth-child(3) { animation-delay: 400ms; }
+  .launch-unit:nth-child(4) { animation-delay: 480ms; }
+
+  .launch-timer {
+    position: relative;
+    overflow: clip;
+  }
+
+  .launch-timer::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(90deg, transparent 24%, #91aaffba 52%, transparent 76%) top / 100% 1px no-repeat,
+      linear-gradient(107deg, transparent 32%, #91aaff22 54%, transparent 74%);
+    pointer-events: none;
+    animation: launch-light-pass 1.25s ease-in-out 190ms both;
+  }
+
+  .launch-unit[data-unit="3"] .launch-number-inner {
+    animation: launch-tick 260ms var(--launch-ease-out) backwards;
+  }
+}
+
+@keyframes launch-photo-drift {
+  from { opacity: calc(var(--launch-photo-opacity) * .72); transform: none; }
+  to { opacity: var(--launch-photo-opacity); transform: scale(1.065) translateY(-.65%); }
+}
+
+@keyframes launch-reveal {
+  from { opacity: .25; transform: translateY(13px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes launch-light-pass {
+  from { opacity: 0; transform: translateX(-90%); }
+  32%, 68% { opacity: 1; }
+  to { opacity: 0; transform: translateX(90%); }
+}
+
+@keyframes launch-tick {
+  from { opacity: .76; transform: translateY(.2em); }
+  to { opacity: 1; transform: none; }
 }
