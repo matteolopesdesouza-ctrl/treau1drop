@@ -63,6 +63,7 @@ body:has(.launch-screen) { background: #08090a; color-scheme: dark; }
 .launch-unit + .launch-unit::before { content: ''; position: absolute; left: 0; top: 12%; bottom: 8%; width: 1px; background: #ffffff2b; }
 .launch-number {
   display: block; font: 800 clamp(56px, 11vw, 128px)/.9 var(--display, Arial, sans-serif);
+  min-inline-size: 2ch; text-align: center;
   font-variant-numeric: tabular-nums; letter-spacing: -.025em; overflow: hidden; padding: .045em .04em;
 }
 .launch-number-inner { display: block; }
@@ -159,23 +160,37 @@ body:has(.launch-screen) { background: #08090a; color-scheme: dark; }
   .launch-screen { --launch-ease-out: cubic-bezier(.22, 1, .36, 1); }
 
   .launch-atmosphere > img {
-    transform-origin: center 32%;
-    animation: launch-photo-drift 3.2s ease-out both;
+    transform-origin: 56% 32%;
+    animation: launch-camera-move 4.2s cubic-bezier(.24, .65, .32, 1) backwards;
+  }
+
+  .launch-atmosphere::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: radial-gradient(ellipse at 72% 42%, #5683ff53, #5683ff1c 29%, transparent 62%);
+    opacity: 0;
+    animation: launch-photo-light 3.4s ease-in-out 160ms backwards;
+  }
+
+  .launch-atmosphere::after { z-index: 2; }
+
+  .launch-schedule time {
+    animation: launch-date-reveal 680ms var(--launch-ease-out) 85ms backwards;
   }
 
   .launch-intro h1,
-  .launch-schedule time,
   .launch-schedule > span,
   .launch-unit {
-    animation: launch-reveal 640ms var(--launch-ease-out) backwards;
+    animation: launch-reveal 560ms var(--launch-ease-out) backwards;
   }
 
-  .launch-schedule time { animation-delay: 90ms; }
   .launch-schedule > span { animation-delay: 170ms; }
-  .launch-unit { animation-delay: 240ms; }
-  .launch-unit:nth-child(2) { animation-delay: 320ms; }
-  .launch-unit:nth-child(3) { animation-delay: 400ms; }
-  .launch-unit:nth-child(4) { animation-delay: 480ms; }
+  .launch-unit { animation-delay: 210ms; }
+  .launch-unit:nth-child(2) { animation-delay: 275ms; }
+  .launch-unit:nth-child(3) { animation-delay: 340ms; }
+  .launch-unit:nth-child(4) { animation-delay: 405ms; }
 
   .launch-timer {
     position: relative;
@@ -185,22 +200,49 @@ body:has(.launch-screen) { background: #08090a; color-scheme: dark; }
   .launch-timer::after {
     content: '';
     position: absolute;
-    inset: 0;
+    inset: 0 auto 0 0;
+    width: 48%;
     background:
-      linear-gradient(90deg, transparent 24%, #91aaffba 52%, transparent 76%) top / 100% 1px no-repeat,
-      linear-gradient(107deg, transparent 32%, #91aaff22 54%, transparent 74%);
+      linear-gradient(90deg, transparent, #aec2ffda 50%, transparent) top / 100% 1px no-repeat,
+      linear-gradient(106deg, transparent 18%, #91aaff30 54%, transparent 89%);
     pointer-events: none;
-    animation: launch-light-pass 1.25s ease-in-out 190ms both;
+    opacity: 0;
+    animation: launch-light-pass 1.2s ease-in-out 330ms backwards;
   }
 
-  .launch-unit[data-unit="3"] .launch-number-inner {
-    animation: launch-tick 260ms var(--launch-ease-out) backwards;
+  .launch-number-inner {
+    --launch-roll-distance: 100%;
+    position: relative;
+  }
+
+  .launch-number-inner[data-outgoing]::before {
+    content: attr(data-outgoing);
+    position: absolute;
+    inset: auto 0 100%;
+  }
+
+  .launch-screen:not([data-launch-at]) .launch-unit[data-unit="3"] .launch-number-inner {
+    animation: launch-tick 320ms var(--launch-ease-out) backwards;
   }
 }
 
-@keyframes launch-photo-drift {
-  from { opacity: calc(var(--launch-photo-opacity) * .72); transform: none; }
-  to { opacity: var(--launch-photo-opacity); transform: scale(1.065) translateY(-.65%); }
+@keyframes launch-camera-move {
+  from {
+    opacity: calc(var(--launch-photo-opacity) * .84);
+    transform: translate(clamp(-34px, -2.8vw, -9px), 1%) scale(1.12);
+  }
+  to { opacity: var(--launch-photo-opacity); transform: none; }
+}
+
+@keyframes launch-photo-light {
+  from { opacity: 0; transform: translateX(-16%); }
+  44% { opacity: .85; }
+  to { opacity: 0; transform: translateX(14%); }
+}
+
+@keyframes launch-date-reveal {
+  from { opacity: .45; transform: translateY(.16em); clip-path: inset(0 0 92%); }
+  to { opacity: 1; transform: none; clip-path: inset(-.2em); }
 }
 
 @keyframes launch-reveal {
@@ -209,9 +251,9 @@ body:has(.launch-screen) { background: #08090a; color-scheme: dark; }
 }
 
 @keyframes launch-light-pass {
-  from { opacity: 0; transform: translateX(-90%); }
-  32%, 68% { opacity: 1; }
-  to { opacity: 0; transform: translateX(90%); }
+  from { opacity: 0; transform: translateX(-100%); }
+  27%, 72% { opacity: 1; }
+  to { opacity: 0; transform: translateX(210%); }
 }
 
 @keyframes launch-tick {

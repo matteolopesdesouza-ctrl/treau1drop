@@ -18,8 +18,17 @@ export function attachCountdown(root, {
   const numbers = Array.from(root.querySelectorAll('.launch-number-inner'));
   const words = ['jour', 'heure', 'minute', 'seconde'];
   const reducedMotion = view.matchMedia?.('(prefers-reduced-motion: reduce)');
+  const activeRolls = new Map();
   let opening = false;
   let interval;
+
+  const stopRoll = number => {
+    const roll = activeRolls.get(number);
+    if (!roll) return;
+    roll.cancel();
+    number.removeAttribute('data-outgoing');
+    activeRolls.delete(number);
+  };
 
   const tick = () => {
     const current = now();
@@ -30,13 +39,21 @@ export function attachCountdown(root, {
       const text = String(value).padStart(2, '0');
       const previous = number.textContent;
       if (previous === text) return;
+      stopRoll(number);
       number.textContent = text;
-      if (animateNumbers && previous !== '--') {
-        number.animate?.(
-          [{ opacity: .76, transform: 'translateY(.2em)' }, { opacity: 1, transform: 'translateY(0)' }],
-          { duration: 260, easing: 'cubic-bezier(.22,1,.36,1)' },
-        );
-      }
+      if (!animateNumbers || previous === '--' || !number.animate) return;
+
+      number.setAttribute('data-outgoing', previous);
+      const roll = number.animate(
+        [{ transform: 'translateY(var(--launch-roll-distance, 0%))' }, { transform: 'translateY(0)' }],
+        { duration: 390, easing: 'cubic-bezier(.28,.66,.32,1)' },
+      );
+      activeRolls.set(number, roll);
+      roll.onfinish = () => {
+        if (activeRolls.get(number) !== roll) return;
+        number.removeAttribute('data-outgoing');
+        activeRolls.delete(number);
+      };
     });
     timer.setAttribute('aria-label', values.map((value, index) => value + ' ' + words[index] + (value === 1 ? '' : 's')).join(', ') + ' avant le drop');
     if (current >= target && !opening) {
@@ -56,6 +73,7 @@ export function attachCountdown(root, {
   tick();
   return () => {
     clearInterval(interval);
+    activeRolls.forEach((_, number) => stopRoll(number));
     page.removeEventListener('visibilitychange', onVisible);
     view.removeEventListener('pageshow', tick);
   };
