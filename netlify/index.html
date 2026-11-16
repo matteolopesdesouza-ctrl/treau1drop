@@ -8,20 +8,27 @@
   <meta name="description" content="Le prochain drop TREAU arrive le 1er décembre 2026 à 00h00, heure de Lisbonne.">
   <link rel="icon" href="/brand/treau-icon.png">
   <link rel="preload" href="/fonts/treau-display-800.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/launch.css">
+  <link rel="stylesheet" href="/launch.css?v={{STYLE_VERSION}}">
   <script type="module" src="/countdown.mjs"></script>
 </head>
 <body>
   <main class="launch-screen" aria-labelledby="launch-title" data-launch-at="{{DROP_DATE}}" data-store-url="{{STORE_URL}}">
     <div class="launch-atmosphere" aria-hidden="true">
       <img src="/images/optimized/campaign-night-1000-414f7cf3.webp" srcset="/images/optimized/campaign-night-600-414f7cf3.webp 600w, /images/optimized/campaign-night-1000-414f7cf3.webp 1000w" sizes="(max-width: 640px) max(100vw, 108svh), 100vw" width="1000" height="667" alt="" fetchpriority="high">
+      <span class="launch-light-beam"></span>
     </div>
     <header class="launch-header">
       <div class="launch-brand">
         <span class="launch-symbol" aria-hidden="true"><img src="/brand/treau-mark-160-c5baefd6.webp" width="160" height="160" alt=""></span>
         <span class="launch-wordmark">TREAU<span>®</span></span>
       </div>
-      <span class="launch-motto">MOVE DIFFERENT.</span>
+      <div class="launch-header-controls">
+        <span class="launch-motto">MOVE DIFFERENT.</span>
+        <label class="launch-background-control">
+          <input type="checkbox" aria-label="Mettre le fond en pause">
+          <span aria-hidden="true"></span>
+        </label>
+      </div>
     </header>
     <div class="launch-center">
       <div class="launch-intro">

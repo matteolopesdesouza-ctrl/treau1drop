@@ -1,4 +1,5 @@
 import { readFile, writeFile, mkdir, rm, copyFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -13,7 +14,6 @@ if (!date || !Number.isFinite(Date.parse(date))) throw new Error('Missing valid 
 await rm(out, { recursive: true, force: true });
 await mkdir(out, { recursive: true });
 const template = await readFile(resolve(here, 'index.html'), 'utf8');
-await writeFile(resolve(out, 'index.html'), template.replaceAll('{{DROP_DATE}}', date).replaceAll('{{STORE_URL}}', storeUrl));
 const reset = `@font-face{font-family:'TREAU Display';src:url('/fonts/treau-display-600.woff2') format('woff2');font-weight:600;font-display:swap}
 @font-face{font-family:'TREAU Display';src:url('/fonts/treau-display-800.woff2') format('woff2');font-weight:800;font-display:swap}
 :root{font-family:Arial,Helvetica,sans-serif;--display:'TREAU Display','Arial Narrow',sans-serif;--mono:'Courier New',monospace}
@@ -22,7 +22,14 @@ const reset = `@font-face{font-family:'TREAU Display';src:url('/fonts/treau-disp
 .launch-open-link[hidden]{display:none}
 :focus-visible{outline:2px solid #7b99ff;outline-offset:5px}
 `;
-await writeFile(resolve(out, 'launch.css'), reset + await readFile(resolve(root, 'app/launch-countdown.css'), 'utf8'));
+const stylesheet = reset + await readFile(resolve(root, 'app/launch-countdown.css'), 'utf8');
+const styleVersion = createHash('sha256').update(stylesheet).digest('hex').slice(0, 12);
+const html = template
+  .replaceAll('{{DROP_DATE}}', date)
+  .replaceAll('{{STORE_URL}}', storeUrl)
+  .replaceAll('{{STYLE_VERSION}}', styleVersion);
+await writeFile(resolve(out, 'index.html'), html);
+await writeFile(resolve(out, 'launch.css'), stylesheet);
 await copyFile(resolve(here, 'countdown.mjs'), resolve(out, 'countdown.mjs'));
 const assets = [
   'brand/treau-icon.png',

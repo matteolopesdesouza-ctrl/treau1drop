@@ -50,6 +50,7 @@ export default function LaunchCountdown({ serverNow }: { serverNow: number }) {
         alt=""
         fetchPriority="high"
       />
+      <span className="launch-light-beam" />
     </div>
 
     <header className="launch-header">
@@ -59,7 +60,13 @@ export default function LaunchCountdown({ serverNow }: { serverNow: number }) {
         </span>
         <span className="launch-wordmark">TREAU<span>®</span></span>
       </div>
-      <span className="launch-motto">MOVE DIFFERENT.</span>
+      <div className="launch-header-controls">
+        <span className="launch-motto">MOVE DIFFERENT.</span>
+        <label className="launch-background-control">
+          <input type="checkbox" aria-label="Mettre le fond en pause" />
+          <span aria-hidden="true" />
+        </label>
+      </div>
     </header>
 
     <div className="launch-center">
